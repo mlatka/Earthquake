@@ -16,7 +16,7 @@ public class EarthquakeQuery {
     // https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02
 
 
-    public static String  findEarthquakes(int lastDays){
+    public static String  findEarthquakes(int lastDays, double minMagnitude){
 
 
         LocalDateTime currentTime = LocalDateTime.now();
@@ -25,19 +25,21 @@ public class EarthquakeQuery {
 
         String searchResult="";
 
-        StringBuilder sb=generateURLBeginning(startDate,endDate);
+        StringBuilder sb=generateURLBeginning(startDate,endDate, minMagnitude);
 
         return usgsQuery(sb).toString();
     }
 
 
-    private  static StringBuilder generateURLBeginning(LocalDate startDate, LocalDate endDate){
+    private  static StringBuilder generateURLBeginning(LocalDate startDate, LocalDate endDate, double minMagnitude){
 
         StringBuilder sb = new StringBuilder("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson");
         sb.append("&starttime=");
         sb.append(startDate);
         sb.append("&endtime=");
         sb.append(endDate);
+        sb.append("&minmagnitude=");
+        sb.append(minMagnitude);
 
         return sb;
 
